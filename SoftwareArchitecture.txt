@@ -1,0 +1,16 @@
+Testing Instructions
+- Install Vrui
+- Install Kinect 3D
+- Be in right directory
+- make
+- Calibrate Utility - CalibrateProjector.h/cpp
+- Run SARndbox - Which is what we are recreating
+
+UC Davis parts
+- calibration auto calibration isnt quite possible  steal from UC davis
+- vrui library Vrui version 3.1 build 004 or newer
+- kinect library Kinect 3D Video Capture Project version 2.8 or newer
+- hardware setup instructions from UC davis
+
+Our Parts
+- the SARndbox application

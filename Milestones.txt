@@ -1,0 +1,33 @@
+Week 1 - Jan 4 - 8
+Week 2 - Jan 11 - 15
+Week 3 - Jan 18 - 22
+Week 4 - Jan 25 - 29
+Week 5 - Feb 1 - 5
+Week 6 - Feb 8 -12
+Reading Week
+Week 7 - Feb 22 -25
+Week 8 - Feb 29 - Mar 4
+Week 9 - Mar 7 - 11
+Week 10 - Mar 14 -18
+Week 11 - Mar 21 - 25
+Week 12 - Mar 28 - Apr 1
+
+
+Project Milestones
+  Lab Space Setup W2
+  Slack Setup W1
+  Github Setup W1
+  CASLAB Setup W1 Environment setup
+
+Software Milestones
+  Testing
+
+
+498 Requirements Milestones
+  Software quality assurance plan Mon 18 Jan 2016
+  Deployment plan document Mon 8 Feb 2016
+  Deployment plan presentation and system demonstration Tue 1 Mar 2016
+  Final project presentation and demonstration Tue 29 Mar 2016
+  Final project documentation Mon 4 Apr 2016
+  Retrospective Essay Mon 11 Apr 2016 noon (individual)
+  Delivered system To customer by Mon 11 Apr 2016 [5]
