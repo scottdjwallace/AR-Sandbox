@@ -13,3 +13,5 @@ AR-Sandbox/
 Collaborators 
 * Scott Wallace 
 * Brad Guner
+* Chris Radford
+* Addie Stewart
