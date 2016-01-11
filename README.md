@@ -10,7 +10,7 @@ SARndbox-1.6/
 AR-Sandbox/
 * Our Application 
 
-Collaborators 
+Collaborators: 
 * Scott Wallace 
 * Brad Guner
 * Chris Radford
