@@ -175,8 +175,9 @@ void addWaterColor(in vec2 fragCoord,inout vec4 baseColor)
 		                       0.25));
 		float colorW=pow(dot(wn,normalize(vec3(0.075,0.075,1.0))),100.0)*1.0-0.0;
 		
-		vec4 waterColor=vec4(colorW,colorW,1.0,1.0); // Water
-		// vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
+		vec4 waterColor=vec4(2.0,2.0,1.0,1.0); // Snow
+		//vec4 waterColor=vec4(colorW,colorW,1.0,1.0); // Water
+		//vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
 		// vec4 waterColor=vec4(0.0,0.0,1.0,1.0); // Blue
 		
 		/* Mix the water color with the base surface color based on the water level: */
@@ -207,8 +208,9 @@ void addWaterColorAdvected(inout vec4 baseColor)
 		//                                0.0025));
 		//float colorW=1.0-pow(noiseNormal.z,2.0);
 		
+		vec4 waterColor=vec4(2.0,2.0,1.0,1.0); // Snow
 		// vec4 waterColor=vec4(1.0-colorW,1.0-colorW,1.0,1.0); // Water
-		vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
+		// vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
 		
 		/* Mix the water color with the base surface color based on the water level: */
 		baseColor=mix(baseColor,waterColor,min(waterLevelTex.b*waterOpacity,1.0));

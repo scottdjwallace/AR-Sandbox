@@ -1,0 +1,18 @@
+./SARndbox -fpv -cp ~/src/SARndbox-1.6/share/SARndbox-1.6/Control.fifo -loadInputGraph SavedInputGraph0001.inputgraph &
+
+./water
+
+while true
+do
+	read -p " " answer
+	case $answer in
+	 [1]* ) ./water;;
+	 [2]* ) ./lava;;
+	 [3]* ) ./ice;;
+	 [4]* ) ./snow;;
+	 [5]* ) ./toxic;;
+	 * ) " "
+	esac
+done
+
+	 
