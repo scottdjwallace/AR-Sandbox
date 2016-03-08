@@ -13,6 +13,8 @@ modified/
 New Features (so far):
 * New Fluid Simulations (Water, Lava, Ice, Snow, Toxic)
 
+Need to add directory for just required executable files to run system
+
 Collaborators:
 * Scott Wallace
 * Brad Guner
