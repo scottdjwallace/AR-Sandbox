@@ -1,0 +1,52 @@
+#!/bin/bash
+
+echo Running Augmented Reality Sandbox
+
+# Start Sandbox with Water Mode
+
+./RunSandbox &
+./water 
+
+# Set flag for current mode
+MODE=1
+echo $MODE
+
+# while true switch modes
+while true
+do
+	read -p " " answer
+	case $answer in
+	 [1]* ) 
+	      killall SARndbox
+	      sleep 1
+	      ./RunSandbox &
+	      ./water ;;
+	 [2]* )
+	      killall SARndbox
+	      sleep 1
+	      ./RunSandbox &
+	      ./lava ;;
+	 [3]* ) 
+	      killall SARndbox
+	      sleep 1
+	      ./RunSandbox &
+	      ./ice ;;
+	 [4]* ) 
+	      killall SARndbox
+	      sleep 1
+	      ./RunSandbox &
+	      ./snow ;;
+	 [5]* ) 
+	      killall SARndbox
+	      sleep 1
+	      ./RunSandbox &
+	      ./toxic ;;
+	 [xX]* )
+	      killall SARndbox
+	      break ;;
+	 * ) " "
+	esac
+done
+
+exit 0
+# add fullscreen flag to water,lava... scripts afterwards
