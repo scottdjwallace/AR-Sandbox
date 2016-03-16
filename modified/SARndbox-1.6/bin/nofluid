@@ -1,0 +1,5 @@
+#/bin/bash
+
+#  pipe to change speed
+echo "waterSpeed 0.0" > ../share/SARndbox-1.6/Control.fifo
+

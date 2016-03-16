@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -199,6 +200,7 @@ const Vrui::ToolFactory* Sandbox::LocalWaterTool::getFactory(void) const
 	return factory;
 	}
 
+// SHOULD BE THE FUNCTION TP USE TO DRAIN/FLOOD
 void Sandbox::LocalWaterTool::buttonCallback(int buttonSlotIndex,Vrui::InputDevice::ButtonCallbackData* cbData)
 	{
 	GLfloat waterAmount=application->rainStrength;
@@ -922,8 +924,10 @@ Sandbox::Sandbox(int& argc,char**& argv)
 	
 	/* Initialize the water flow simulator: */
 	waterTable=new WaterTable2(wtSize[0],wtSize[1],basePlane,basePlaneCorners);
-	waterTable->setElevationRange(elevationMin,rainElevationMax);
+	waterTable->setElevationRange(elevationMin,rainElevationMax);	
 	waterTable->setWaterDeposit(evaporationRate);
+
+
 	
 	/* Register a render function with the water table: */
 	addWaterFunction=Misc::createFunctionCall(this,&Sandbox::addWater);
@@ -1001,7 +1005,11 @@ Sandbox::Sandbox(int& argc,char**& argv)
 			maxDist=dist;
 		}
 	Vrui::setNavigationTransformation(c,maxDist,Geometry::normal(Vrui::Vector(basePlane.getNormal())));
-	}
+	
+	MeltMode();
+
+
+}
 
 Sandbox::~Sandbox(void)
 	{
@@ -1433,5 +1441,29 @@ void Sandbox::initContext(GLContextData& contextData) const
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,currentFrameBuffer);
 	} 
 	}
+
+/**************************************
+Methods of class Sandbox that we added:
+**************************************/
+void Sandbox::MeltMode() {
+	//makeItRain();
+}
+
+void Sandbox::sleep2(unsigned int mseconds) {
+    clock_t goal = mseconds + clock();
+    while (goal > clock());
+}
+
+
+void Sandbox::makeItRain() {
+	GLfloat waterAmount=this->rainStrength;
+	waterAmount=waterAmount*10;
+	this->waterTable->setWaterDeposit(this->waterTable->getWaterDeposit()+waterAmount);
+}
+
+void Sandbox::makeItDrain() {
+	GLfloat waterAmount=this->rainStrength;
+	this->waterTable->setWaterDeposit(this->waterTable->getWaterDeposit()-waterAmount);
+}
 
 VRUI_APPLICATION_RUN(Sandbox)

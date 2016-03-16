@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./SARndbox -fpv -cp ../share/SARndbox-1.6/Control.fifo -ws 0.0 0 &
+
+
+	 

@@ -275,7 +275,9 @@ void* RainMaker::detectionThreadMethod(void)
 				extractBlobs<unsigned short>(depthFrame,vpp,blobsCc);
 			
 			/* Call the callback function: */
+			/* THIS IS WHERE WE ARE CALLING TO ADD WATER TO THE SANDBOX BASED ON WHERE HAND IN */
 			(*outputBlobsFunction)(blobsCc);
+
 			}
 		}
 	

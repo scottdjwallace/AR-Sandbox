@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include <Vrui/Application.h>
 #include <Kinect/FrameBuffer.h>
 #include <Kinect/FrameSource.h>
+#include <time.h>
 
 #include "RainMaker.h"
 
@@ -201,6 +202,12 @@ class Sandbox:public Vrui::Application,public GLObject
 	public:
 	Sandbox(int& argc,char**& argv);
 	virtual ~Sandbox(void);
+	void MeltMode();
+	void sleep2(unsigned int);
+	void makeItRain();
+	void makeItDrain();
+	
+
 	
 	/* Methods from Vrui::Application: */
 	virtual void frame(void);

@@ -2,45 +2,46 @@
 
 echo Running Augmented Reality Sandbox
 
-# Start Sandbox with Water Mode
-
-./RunSandbox &
-./water 
-
-# Set flag for current mode
-MODE=1
-echo $MODE
+# Start Sandbox in Dry Mode
+./RunSandboxDry &
 
 # while true switch modes
+# modes 7 and 8 are for the future, won't work currently
 while true
 do
 	read -p " " answer
 	case $answer in
 	 [1]* ) 
-	      killall SARndbox
-	      sleep 1
+		  killall SARndbox
+	      ./RunSandboxDry & ;;
+	 [2]* )     
+		  killall SARndbox
 	      ./RunSandbox &
 	      ./water ;;
-	 [2]* )
-	      killall SARndbox
-	      sleep 1
-	      ./RunSandbox &
-	      ./lava ;;
 	 [3]* ) 
 	      killall SARndbox
-	      sleep 1
 	      ./RunSandbox &
-	      ./ice ;;
+	      ./lava ;;
 	 [4]* ) 
 	      killall SARndbox
-	      sleep 1
 	      ./RunSandbox &
-	      ./snow ;;
+	      ./ice ;;
 	 [5]* ) 
 	      killall SARndbox
-	      sleep 1
+	      ./RunSandbox &
+	      ./snow ;;
+	 [6]* ) 
+	      killall SARndbox
 	      ./RunSandbox &
 	      ./toxic ;;
+	 [7]* )
+		  killall SARndbox
+		  ./RunSandboxMelting &
+		  ./ice ;;
+	 [8]* )
+		  killall SARndbox
+		  ./RunSandboxVolcano &
+		  ./lava ;;
 	 [xX]* )
 	      killall SARndbox
 	      break ;;
