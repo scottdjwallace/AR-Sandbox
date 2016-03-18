@@ -4,16 +4,10 @@ Application for an Augmented Reality Sandbox. Original Project from [UC Davis.](
 
 See [this video.](https://www.youtube.com/watch?v=8Wnz_g3QA1A)
 
-original/
-* UC Davis Implementation
-
-modified/
-* Our Application
-
-New Features (so far):
-* New Fluid Simulations (Water, Lava, Ice, Snow, Toxic)
-
-Need to add directory for just required executable files to run system
+####To do
+* Need to overwrite the SurfaceAddWaterColor.fs files
+* make sure new buttons work
+* make the drain function
 
 Collaborators:
 * Scott Wallace
