@@ -183,9 +183,6 @@ class Sandbox:public Vrui::Application,public GLObject
 	GLMotif::TextFieldSlider* waterAttenuationSlider;
 	int controlPipeFd; // File descriptor of an optional named pipe to send control commands to a running AR Sandbox
 
-	/* Public elements */
-	static int currentMode;
-
 
 	/* Private methods: */
 	void rawDepthFrameDispatcher(const Kinect::FrameBuffer& frameBuffer); // Callback receiving raw depth frames from the Kinect camera; forwards them to the frame filter and rain maker objects
@@ -205,6 +202,9 @@ class Sandbox:public Vrui::Application,public GLObject
 	public:
 	Sandbox(int& argc,char**& argv);
 	virtual ~Sandbox(void);
+
+	/* Public elements */
+	static int currentMode;
 
 	/* Methods from Vrui::Application: */
 	virtual void frame(void);
