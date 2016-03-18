@@ -1,0 +1,8 @@
+#/bin/bash
+
+#  changes colour
+cp ../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Toxic.fs ../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs 
+
+#  pipe to change speed
+echo "waterSpeed 1.2" > ../share/SARndbox-1.6/Control.fifo
+
