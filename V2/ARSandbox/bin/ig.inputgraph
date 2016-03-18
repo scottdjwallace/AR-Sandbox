@@ -1,14 +1,14 @@
 section InputGraph
 	section Tool0
 		toolClass WaterTool
-		bindings ((Mouse, f, 0))
+		bindings ((Mouse, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
 	endsection
-	
+
 	section Tool1
 		toolClass RayScreenMenuTool
 		bindings ((Mouse, Mouse3))
 	endsection
-	
+
 	section Tool2
 		toolClass FPSNavigationTool
 		bindings ((Mouse, q, a, d, s, w, Space))
@@ -27,17 +27,17 @@ section InputGraph
 		hudRadius 5
 		hudFontSize 0.112500004
 	endsection
-	
+
 	section Tool3
 		toolClass ScrollTool
 		bindings ((Mouse, MouseWheel))
 	endsection
-	
+
 	section Tool4
 		toolClass WidgetTool
 		bindings ((Mouse, Mouse1))
 	endsection
-	
+
 	section Tool5
 		toolClass MouseNavigationTool
 		bindings ((Tool4, Button0), (Mouse, z, LeftShift), (Tool3, Valuator0))

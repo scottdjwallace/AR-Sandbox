@@ -70,62 +70,62 @@ class Sandbox:public Vrui::Application,public GLObject
 	private:
 	typedef Geometry::Box<double,3> Box; // Type for bounding boxes
 	typedef Geometry::ProjectiveTransformation<double,3> PTransform; // Type for projective transformations
-	
+
 	class WaterTool;
 	typedef Vrui::GenericToolFactory<WaterTool> WaterToolFactory;
-	
+
 	class WaterTool:public Vrui::Tool,public Vrui::Application::Tool<Sandbox>
 		{
 		friend class Vrui::GenericToolFactory<WaterTool>;
-		
+
 		/* Elements: */
 		private:
 		static WaterToolFactory* factory; // Pointer to the factory object for this class
-		
+
 		/* Constructors and destructors: */
 		public:
 		static WaterToolFactory* initClass(Vrui::ToolManager& toolManager);
 		WaterTool(const Vrui::ToolFactory* factory,const Vrui::ToolInputAssignment& inputAssignment);
 		virtual ~WaterTool(void);
-		
+
 		/* Methods from class Vrui::Tool: */
 		virtual const Vrui::ToolFactory* getFactory(void) const;
 		virtual void buttonCallback(int buttonSlotIndex,Vrui::InputDevice::ButtonCallbackData* cbData);
 		};
-	
+
 	class LocalWaterTool;
 	typedef Vrui::GenericToolFactory<LocalWaterTool> LocalWaterToolFactory;
-	
+
 	class LocalWaterTool:public Vrui::Tool,public Vrui::Application::Tool<Sandbox>,public Vrui::TransparentObject
 		{
 		friend class Vrui::GenericToolFactory<LocalWaterTool>;
-		
+
 		/* Elements: */
 		private:
 		static LocalWaterToolFactory* factory; // Pointer to the factory object for this class
-		
+
 		const AddWaterFunction* addWaterFunction; // Render function registered with the water table
 		GLfloat adding; // Amount of data added or removed from the water table
-		
+
 		/* Constructors and destructors: */
 		public:
 		static LocalWaterToolFactory* initClass(Vrui::ToolManager& toolManager);
 		LocalWaterTool(const Vrui::ToolFactory* factory,const Vrui::ToolInputAssignment& inputAssignment);
 		virtual ~LocalWaterTool(void);
-		
+
 		/* Methods from class Vrui::Tool: */
 		virtual void initialize(void);
 		virtual void deinitialize(void);
 		virtual const Vrui::ToolFactory* getFactory(void) const;
 		virtual void buttonCallback(int buttonSlotIndex,Vrui::InputDevice::ButtonCallbackData* cbData);
-		
+
 		/* Methods from class Vrui::TransparentObject: */
 		virtual void glRenderActionTransparent(GLContextData& contextData) const;
-		
+
 		/* New methods: */
 		void addWater(GLContextData& contextData) const; // Function to render geometry that adds water to the water table
 		};
-	
+
 	struct DataItem:public GLObject::DataItem
 		{
 		/* Elements: */
@@ -135,15 +135,15 @@ class Sandbox:public Vrui::Application,public GLObject
 		GLsizei shadowBufferSize[2]; // Size of the shadow rendering frame buffer
 		GLuint shadowFramebufferObject; // Frame buffer object to render shadow maps
 		GLuint shadowDepthTextureObject; // Depth texture for the shadow rendering frame buffer
-		
+
 		/* Constructors and destructors: */
 		DataItem(void);
 		virtual ~DataItem(void);
 		};
-	
+
 	friend class WaterTool;
 	friend class LocalWaterTool;
-	
+
 	/* Elements: */
 	private:
 	USB::Context usbContext; // USB context for the Kinect camera device
@@ -182,7 +182,11 @@ class Sandbox:public Vrui::Application,public GLObject
 	GLMotif::TextField* frameRateTextField;
 	GLMotif::TextFieldSlider* waterAttenuationSlider;
 	int controlPipeFd; // File descriptor of an optional named pipe to send control commands to a running AR Sandbox
-	
+
+	/* Public elements */
+	static int currentMode;
+
+
 	/* Private methods: */
 	void rawDepthFrameDispatcher(const Kinect::FrameBuffer& frameBuffer); // Callback receiving raw depth frames from the Kinect camera; forwards them to the frame filter and rain maker objects
 	void receiveFilteredFrame(const Kinect::FrameBuffer& frameBuffer); // Callback receiving filtered depth frames from the filter object
@@ -196,17 +200,17 @@ class Sandbox:public Vrui::Application,public GLObject
 	GLMotif::PopupMenu* createMainMenu(void);
 	GLMotif::PopupWindow* createWaterControlDialog(void);
 	bool loadHeightColorMap(const char* heightColorMapFileName); // Loads a new height color map from a file of the given name
-	
+
 	/* Constructors and destructors: */
 	public:
 	Sandbox(int& argc,char**& argv);
 	virtual ~Sandbox(void);
-	
+
 	/* Methods from Vrui::Application: */
 	virtual void frame(void);
 	virtual void display(GLContextData& contextData) const;
 	virtual void eventCallback(EventID eventId,Vrui::InputDevice::ButtonCallbackData* cbData);
-	
+
 	/* Methods from GLObject: */
 	virtual void initContext(GLContextData& contextData) const;
 	};
