@@ -275,13 +275,12 @@ void* RainMaker::detectionThreadMethod(void)
 				extractBlobs<unsigned short>(depthFrame,vpp,blobsCc);
 
 			/* Call the callback function: */
-			if (Sandbox::currentMode==8) { // it is melting mode
+			// if  it is melting mode
 				// get length of blob list
 				// drain % x length of blob list
-			}
-			else {
-				(*outputBlobsFunction)(blobsCc);
-			}
+
+			(*outputBlobsFunction)(blobsCc);
+
 			}
 		}
 

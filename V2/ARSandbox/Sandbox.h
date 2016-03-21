@@ -204,7 +204,7 @@ class Sandbox:public Vrui::Application,public GLObject
 	virtual ~Sandbox(void);
 
 	/* Public elements */
-	static int currentMode;
+	int currentMode;
 
 	/* Methods from Vrui::Application: */
 	virtual void frame(void);

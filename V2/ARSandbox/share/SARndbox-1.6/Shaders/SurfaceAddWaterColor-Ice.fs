@@ -160,26 +160,27 @@ void addWaterColor(in vec2 fragCoord,inout vec4 baseColor)
 	         texture2DRect(bathymetrySampler,vec2(waterLevelTexCoord.x-1.0,waterLevelTexCoord.y)).r+
 	         texture2DRect(bathymetrySampler,waterLevelTexCoord.xy).r)*0.25;
 	float waterLevel=texture2DRect(quantitySampler,waterLevelTexCoord).r-b;
-	
+
 	/* Check if the surface is under water: */
 	if(waterLevel>0.0)
 		{
 		/* Calculate the water color: */
 		// float colorW=max(snoise(vec3(fragCoord*0.05,waterAnimationTime*0.25)),0.0); // Simple noise function
 		// float colorW=max(turb(vec3(fragCoord*0.05,waterAnimationTime*0.25)),0.0); // Turbulence noise
-		
+
 		vec3 wn=normalize(vec3(texture2DRect(quantitySampler,vec2(waterLevelTexCoord.x-1.0,waterLevelTexCoord.y)).r-
 		                       texture2DRect(quantitySampler,vec2(waterLevelTexCoord.x+1.0,waterLevelTexCoord.y)).r,
 		                       texture2DRect(quantitySampler,vec2(waterLevelTexCoord.x,waterLevelTexCoord.y-1.0)).r-
 		                       texture2DRect(quantitySampler,vec2(waterLevelTexCoord.x,waterLevelTexCoord.y+1.0)).r,
 		                       0.25));
 		float colorW=pow(dot(wn,normalize(vec3(0.075,0.075,1.0))),100.0)*1.0-0.0;
-		
+
 		vec4 waterColor=vec4(1.0-colorW,1.0-colorW*0.2,1.0,1.0); // Ice
-		// vec4 waterColor=vec4(colorW,colorW,1.0,1.0); // Water
-		// vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
-		// vec4 waterColor=vec4(0.0,0.0,1.0,1.0); // Blue
-		
+    //vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
+    //vec4 waterColor=vec4(2.0,2.0,1.0,1.0); // Snow
+    //vec4 waterColor=vec4(0.2-colorW,1.0-colorW*2.0,0.2,1.0); // Toxic
+    //vec4 waterColor=vec4(1.0-colorW,1.0-colorW,1.0,1.0); // Water
+
 		/* Mix the water color with the base surface color based on the water level: */
 		baseColor=mix(baseColor,waterColor,min(waterLevel*waterOpacity,1.0));
 		}
@@ -201,17 +202,19 @@ void addWaterColorAdvected(inout vec4 baseColor)
 		/* Calculate the water color: */
 		// float colorW=max(snoise(vec3(waterLevelTex.rg*0.05/waterLevelTex.b,waterAnimationTime*0.25)),0.0); // Simple noise function
 		float colorW=max(turb(vec3(waterLevelTex.rg*0.05/waterLevelTex.b,waterAnimationTime*0.25)),0.0); // Turbulence noise
-		
+
 		//vec3 noisePos=vec3(waterLevelTex.rg*0.045/waterLevelTex.b,waterAnimationTime*0.25);
 		//vec3 noiseNormal=normalize(vec3(snoise(noisePos-vec3(0.001,0.0,0.0))-snoise(noisePos+vec3(0.001,0.0,0.0)),
 		//                                snoise(noisePos-vec3(0.0,0.001,0.0))-snoise(noisePos+vec3(0.0,0.001,0.0)),
 		//                                0.0025));
 		//float colorW=1.0-pow(noiseNormal.z,2.0);
-		
+
 		vec4 waterColor=vec4(1.0-colorW,1.0-colorW*0.2,1.0,1.0); // Ice
-		// vec4 waterColor=vec4(1.0-colorW,1.0-colorW,1.0,1.0); // Water
-		// vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
-		
+    //vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
+    //vec4 waterColor=vec4(2.0,2.0,1.0,1.0); // Snow
+    //vec4 waterColor=vec4(0.2-colorW,1.0-colorW*2.0,0.2,1.0); // Toxic
+    //vec4 waterColor=vec4(1.0-colorW,1.0-colorW,1.0,1.0); // Water
+
 		/* Mix the water color with the base surface color based on the water level: */
 		baseColor=mix(baseColor,waterColor,min(waterLevelTex.b*waterOpacity,1.0));
 		}
