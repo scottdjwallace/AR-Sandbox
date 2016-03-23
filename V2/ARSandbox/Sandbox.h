@@ -71,6 +71,7 @@ class Sandbox:public Vrui::Application,public GLObject
 	typedef Geometry::Box<double,3> Box; // Type for bounding boxes
 	typedef Geometry::ProjectiveTransformation<double,3> PTransform; // Type for projective transformations
 
+	public:
 	class WaterTool;
 	typedef Vrui::GenericToolFactory<WaterTool> WaterToolFactory;
 
@@ -87,6 +88,7 @@ class Sandbox:public Vrui::Application,public GLObject
 		static WaterToolFactory* initClass(Vrui::ToolManager& toolManager);
 		WaterTool(const Vrui::ToolFactory* factory,const Vrui::ToolInputAssignment& inputAssignment);
 		virtual ~WaterTool(void);
+
 
 		/* Methods from class Vrui::Tool: */
 		virtual const Vrui::ToolFactory* getFactory(void) const;
@@ -202,9 +204,10 @@ class Sandbox:public Vrui::Application,public GLObject
 	public:
 	Sandbox(int& argc,char**& argv);
 	virtual ~Sandbox(void);
+	void drainWater(int);
 
 	/* Public elements */
-	int currentMode;
+	static int currentMode;
 
 	/* Methods from Vrui::Application: */
 	virtual void frame(void);

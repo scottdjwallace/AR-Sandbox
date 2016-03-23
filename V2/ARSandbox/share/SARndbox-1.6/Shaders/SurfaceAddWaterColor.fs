@@ -18,6 +18,7 @@ General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with the Augmented Reality Sandbox; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+abcdabcdabcd
 ***********************************************************************/
 
 #extension GL_ARB_texture_rectangle : enable
@@ -175,11 +176,11 @@ void addWaterColor(in vec2 fragCoord,inout vec4 baseColor)
 		                       0.25));
 		float colorW=pow(dot(wn,normalize(vec3(0.075,0.075,1.0))),100.0)*1.0-0.0;
 
+		vec4 waterColor=vec4(colorW,colorW,1.0,1.0); // Water
     //vec4 waterColor=vec4(1.0-colorW,1.0-colorW*0.2,1.0,1.0); // Ice
-    vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
-     //vec4 waterColor=vec4(2.0,2.0,1.0,1.0); // Snow
-     //vec4 waterColor=vec4(0.2-colorW,1.0-colorW*2.0,0.2,1.0); // Toxic
-     //vec4 waterColor=vec4(1.0-colorW,1.0-colorW,1.0,1.0); // Water
+    //vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
+    //vec4 waterColor=vec4(2.0,2.0,1.0,1.0); // Snow
+    //vec4 waterColor=vec4(0.2-colorW,1.0-colorW*2.0,0.2,1.0); // Toxic
 
 		/* Mix the water color with the base surface color based on the water level: */
 		baseColor=mix(baseColor,waterColor,min(waterLevel*waterOpacity,1.0));
@@ -209,11 +210,11 @@ void addWaterColorAdvected(inout vec4 baseColor)
 		//                                0.0025));
 		//float colorW=1.0-pow(noiseNormal.z,2.0);
 
-		vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
+		vec4 waterColor=vec4(1.0-colorW,1.0-colorW,1.0,1.0); // Water
     //vec4 waterColor=vec4(1.0-colorW,1.0-colorW*0.2,1.0,1.0); // Ice
+    //vec4 waterColor=vec4(1.0-colorW,1.0-colorW*2.0,0.0,1.0); // Lava
     //vec4 waterColor=vec4(2.0,2.0,1.0,1.0); // Snow
     //vec4 waterColor=vec4(0.2-colorW,1.0-colorW*2.0,0.2,1.0); // Toxic
-    //vec4 waterColor=vec4(1.0-colorW,1.0-colorW,1.0,1.0); // Water
 
 		/* Mix the water color with the base surface color based on the water level: */
 		baseColor=mix(baseColor,waterColor,min(waterLevelTex.b*waterOpacity,1.0));

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include <Misc/FunctionCalls.h>
 #include <Geometry/HVector.h>
 #include <Geometry/Plane.h>
+#include "Sandbox.h"
 
 #include "FindBlobs.h"
 
@@ -274,12 +275,7 @@ void* RainMaker::detectionThreadMethod(void)
 			else
 				extractBlobs<unsigned short>(depthFrame,vpp,blobsCc);
 
-			/* Call the callback function: */
-			// if  it is melting mode
-				// get length of blob list
-				// drain % x length of blob list
-
-			(*outputBlobsFunction)(blobsCc);
+				(*outputBlobsFunction)(blobsCc);
 
 			}
 		}

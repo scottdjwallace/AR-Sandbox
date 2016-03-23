@@ -92,6 +92,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include "SurfaceRenderer.h"
 #include "WaterTable2.h"
 
+/* Set current mode to 3, as it starts in water mode */
+int Sandbox::currentMode = 3;
+
 /*******************************************
 Static elements of class Sandbox::WaterTool:
 *******************************************/
@@ -139,6 +142,11 @@ const Vrui::ToolFactory* Sandbox::WaterTool::getFactory(void) const
 	return factory;
 	}
 
+void Sandbox::drainWater(int drainStrength) {
+	GLfloat waterAmount=0.002f;
+	this->waterTable->setWaterDeposit(this->waterTable->getWaterDeposit()-waterAmount*drainStrength);
+}
+
 void Sandbox::WaterTool::buttonCallback(int buttonSlotIndex,Vrui::InputDevice::ButtonCallbackData* cbData)
 	{
 	GLfloat waterAmount=application->rainStrength;
@@ -153,8 +161,8 @@ void Sandbox::WaterTool::buttonCallback(int buttonSlotIndex,Vrui::InputDevice::B
 	}
 	else if(buttonSlotIndex==2) { // Drain System
 		waterAmount=-waterAmount;
-		//application->waterSpeed=1.0;
-		application->waterSpeed=2.0;
+		application->waterSpeed=1.0;
+		//application->waterSpeed=2.0;
 		application->waterTable->setWaterDeposit(application->waterTable->getWaterDeposit()+waterAmount);
 	}
 	else if(buttonSlotIndex==3) { // Water
@@ -247,10 +255,6 @@ void Sandbox::WaterTool::buttonCallback(int buttonSlotIndex,Vrui::InputDevice::B
 		application->currentMode=8;
 		application->waterSpeed=0.1;
 		waterAmount=waterAmount*10;
-		if (application->waterTable->getWaterDeposit() != 0) {
-			// full drain
-			application->waterTable->setWaterDeposit(application->waterTable->getWaterDeposit()-waterAmount);
-		}
 		// then full fill
 		application->waterTable->setWaterDeposit(application->waterTable->getWaterDeposit()+waterAmount);
 	}
@@ -485,8 +489,18 @@ void Sandbox::receiveFilteredFrame(const Kinect::FrameBuffer& frameBuffer)
 
 void Sandbox::receiveRainObjects(const RainMaker::BlobList& newRainObjects)
 	{
+
 	/* Put the new object list into the object list buffer: */
-	rainObjects.postNewValue(newRainObjects);
+
+	if (Sandbox::currentMode==8){
+		//get #number of blobs
+		int drainStrength = newRainObjects.size();
+		// call a draining function
+		this->drainWater(drainStrength);
+	}
+	else {
+		rainObjects.postNewValue(newRainObjects);
+	}
 
 	/* Don't wake up the foreground thread; do it when a new filtered frame arrives: */
 	// Vrui::requestUpdate();
@@ -701,7 +715,7 @@ bool Sandbox::loadHeightColorMap(const char* heightColorMapFileName)
 
 Sandbox::Sandbox(int& argc,char**& argv)
 	:Vrui::Application(argc,argv),
-	 camera(0), currentMode(3),
+	 camera(0),
 	 frameFilter(0),pauseUpdates(false),
 	 surfaceMaterial(GLMaterial::Color(0.8f,0.8f,0.8f),GLMaterial::Color(1.0f,1.0f,1.0f),25.0f),
 	 heightMapVersion(0),

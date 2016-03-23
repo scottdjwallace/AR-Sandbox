@@ -50,7 +50,7 @@ class RainMaker
 	typedef Geometry::Point<double,3> Point;
 	typedef Geometry::Plane<double,3> Plane;
 	typedef Geometry::ProjectiveTransformation<double,3> PTransform;
-	
+
 	struct Blob // Structure to describe a detected object in camera space
 		{
 		/* Elements: */
@@ -58,10 +58,10 @@ class RainMaker
 		Point centroid; // Object's centroid in camera space
 		double radius; // Object's approximate radius in camera space
 		};
-	
+
 	typedef std::vector<Blob> BlobList; // Type for lists of detected objects
 	typedef Misc::FunctionCall<const BlobList&> OutputBlobsFunction; // Type for functions called when a new object list has been extracted
-	
+
 	/* Elements: */
 	private:
 	unsigned int depthSize[2]; // Width and height of incoming depth frames
@@ -81,17 +81,17 @@ class RainMaker
 	volatile bool runDetectionThread; // Flag to keep the background object detection thread running
 	Threads::Thread detectionThread; // The background object detection thread
 	OutputBlobsFunction* outputBlobsFunction; // Function called when a new (potentially empty) object list has been extracted
-	
+
 	/* Private methods: */
 	template <class DepthPixelParam>
 	void extractBlobs(const Kinect::FrameBuffer& depthFrame,const ValidPixelProperty& vpp,BlobList& blobsCc);
 	void* detectionThreadMethod(void); // Method for the object detection thread
-	
+
 	/* Constructors and destructors: */
 	public:
 	RainMaker(const unsigned int sDepthSize[2],const unsigned int sColorSize[2],const PTransform& sDepthProjection,const PTransform& sColorProjection,const Plane& basePlane,double minElevation,double maxElevation,int sMinBlobSize); // Creates an object detector for frames of the given size and the given range of elevation values relative to the given base plane in camera space
 	~RainMaker(void); // Destroys the object detector
-	
+
 	/* Methods: */
 	void setDepthIsFloat(bool newDepthIsFloat); // Sets whether incoming depth frames have float pixel values
 	void setOutputBlobsFunction(OutputBlobsFunction* newOutputBlobsFunction); // Sets the output function; adopts given functor object
