@@ -24,10 +24,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/sendfile.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string>
@@ -92,9 +90,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #include "SurfaceRenderer.h"
 #include "WaterTable2.h"
 
-/* Set current mode to 3, as it starts in water mode */
-int Sandbox::currentMode = 3;
-
 /*******************************************
 Static elements of class Sandbox::WaterTool:
 *******************************************/
@@ -140,105 +135,100 @@ const Vrui::ToolFactory* Sandbox::WaterTool::getFactory(void) const
 	return factory;
 	}
 
-void Sandbox::drainWater(int drainStrength) {
-	GLfloat waterAmount=0.002f;
-	this->waterTable->setWaterDeposit(this->waterTable->getWaterDeposit()-waterAmount*drainStrength);
-}
-
-void Sandbox::WaterTool::buttonCallback(int buttonSlotIndex,Vrui::InputDevice::ButtonCallbackData* cbData)
-	{
-	GLfloat waterAmount=application->rainStrength;
-	if(buttonSlotIndex==0) { // Dry Mode
-		application->currentMode=0;
-		application->waterTable->setWaterDeposit(0);
-		application->waterSpeed=0.0;
+	void Sandbox::WaterTool::buttonCallback(int buttonSlotIndex,Vrui::InputDevice::ButtonCallbackData* cbData)
+		{
+		GLfloat waterAmount=application->rainStrength;
+		if(buttonSlotIndex==0) { // Dry Mode
+			application->currentMode=0;
+			application->waterTable->setWaterDeposit(0);
+			application->waterSpeed=0.0;
+		}
+		else if(buttonSlotIndex==1) { // Flood System
+			application->waterSpeed=1.0;
+			application->waterTable->setWaterDeposit(application->waterTable->getWaterDeposit()+waterAmount);
+		}
+		else if(buttonSlotIndex==2) { // Drain System
+			waterAmount=-waterAmount;
+			application->waterSpeed=1.0;
+			//application->waterSpeed=2.0;
+			application->waterTable->setWaterDeposit(application->waterTable->getWaterDeposit()+waterAmount);
+		}
+		else if(buttonSlotIndex==3) { // Water
+			application->currentMode=3;
+			application->waterSpeed=1.0;
+			// change the AddSurfaceWaterColor.fs
+			int read_fd;
+			int write_fd;
+			struct stat stat_buf;
+			off_t offset = 0;
+			read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Water.fs", O_RDONLY);
+			fstat (read_fd, &stat_buf);
+			write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
+			sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
+			close (read_fd);
+			close (write_fd);
+		}
+		else if(buttonSlotIndex==4) { // Lava
+			application->currentMode=4;
+			application->waterSpeed=0.5;
+			// change the AddSurfaceWaterColor.fs
+			int read_fd;
+			int write_fd;
+			struct stat stat_buf;
+			off_t offset = 0;
+			read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Lava.fs", O_RDONLY);
+			fstat (read_fd, &stat_buf);
+			write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
+			sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
+			close (read_fd);
+			close (write_fd);
+		}
+		else if(buttonSlotIndex==5) { // Ice
+			application->currentMode=5;
+			application->waterSpeed=0.1;
+			// change the AddSurfaceWaterColor.fs
+			int read_fd;
+			int write_fd;
+			struct stat stat_buf;
+			off_t offset = 0;
+			read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Ice.fs", O_RDONLY);
+			fstat (read_fd, &stat_buf);
+			write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
+			sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
+			close (read_fd);
+			close (write_fd);
+		}
+		else if(buttonSlotIndex==6) { // Snow
+			application->currentMode=6;
+			application->waterSpeed=0.1;
+			// change the AddSurfaceWaterColor.fs
+			int read_fd;
+			int write_fd;
+			struct stat stat_buf;
+			off_t offset = 0;
+			read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Snow.fs", O_RDONLY);
+			fstat (read_fd, &stat_buf);
+			write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
+			sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
+			close (read_fd);
+			close (write_fd);
+		}
+		else if(buttonSlotIndex==7) { // Toxic
+			application->currentMode=7;
+			application->waterSpeed=1.4;
+			// change the AddSurfaceWaterColor.fs
+			int read_fd;
+			int write_fd;
+			struct stat stat_buf;
+			off_t offset = 0;
+			read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Toxic.fs", O_RDONLY);
+			fstat (read_fd, &stat_buf);
+			write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
+			sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
+			close (read_fd);
+			close (write_fd);
+		}
 	}
-	else if(buttonSlotIndex==1) { // Flood System
-		application->waterSpeed=1.0;
-		application->waterTable->setWaterDeposit(application->waterTable->getWaterDeposit()+waterAmount);
-	}
-	else if(buttonSlotIndex==2) { // Drain System
-		waterAmount=-waterAmount;
-		application->waterSpeed=1.0;
-		//application->waterSpeed=2.0;
-		application->waterTable->setWaterDeposit(application->waterTable->getWaterDeposit()+waterAmount);
-	}
-	else if(buttonSlotIndex==3) { // Water
-		application->currentMode=3;
-		application->waterSpeed=1.0;
-		// change the AddSurfaceWaterColor.fs
-		int read_fd;
-		int write_fd;
-		struct stat stat_buf;
-		off_t offset = 0;
-		read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Water.fs", O_RDONLY);
-		fstat (read_fd, &stat_buf);
-		write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
-		sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
-		close (read_fd);
-		close (write_fd);
-	}
-	else if(buttonSlotIndex==4) { // Lava
-		application->currentMode=4;
-		application->waterSpeed=0.5;
-		// change the AddSurfaceWaterColor.fs
-		int read_fd;
-		int write_fd;
-		struct stat stat_buf;
-		off_t offset = 0;
-		read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Lava.fs", O_RDONLY);
-		fstat (read_fd, &stat_buf);
-		write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
-		sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
-		close (read_fd);
-		close (write_fd);
-	}
-	else if(buttonSlotIndex==5) { // Ice
-		application->currentMode=5;
-		application->waterSpeed=0.1;
-		// change the AddSurfaceWaterColor.fs
-		int read_fd;
-		int write_fd;
-		struct stat stat_buf;
-		off_t offset = 0;
-		read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Ice.fs", O_RDONLY);
-		fstat (read_fd, &stat_buf);
-		write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
-		sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
-		close (read_fd);
-		close (write_fd);
-	}
-	else if(buttonSlotIndex==6) { // Snow
-		application->currentMode=6;
-		application->waterSpeed=0.1;
-		// change the AddSurfaceWaterColor.fs
-		int read_fd;
-		int write_fd;
-		struct stat stat_buf;
-		off_t offset = 0;
-		read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Snow.fs", O_RDONLY);
-		fstat (read_fd, &stat_buf);
-		write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
-		sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
-		close (read_fd);
-		close (write_fd);
-	}
-	else if(buttonSlotIndex==7) { // Toxic
-		application->currentMode=7;
-		application->waterSpeed=1.4;
-		// change the AddSurfaceWaterColor.fs
-		int read_fd;
-		int write_fd;
-		struct stat stat_buf;
-		off_t offset = 0;
-		read_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor-Toxic.fs", O_RDONLY);
-		fstat (read_fd, &stat_buf);
-		write_fd = open ("../share/SARndbox-1.6/Shaders/SurfaceAddWaterColor.fs", O_WRONLY | O_CREAT, stat_buf.st_mode);
-		sendfile (write_fd, read_fd, &offset, stat_buf.st_size);
-		close (read_fd);
-		close (write_fd);
-	}
-}
 
 /************************************************
 Static elements of class Sandbox::LocalWaterTool:
@@ -465,18 +455,8 @@ void Sandbox::receiveFilteredFrame(const Kinect::FrameBuffer& frameBuffer)
 
 void Sandbox::receiveRainObjects(const RainMaker::BlobList& newRainObjects)
 	{
-
 	/* Put the new object list into the object list buffer: */
-
-	if (Sandbox::currentMode==8){
-		//get #number of blobs
-		int drainStrength = newRainObjects.size();
-		// call a draining function
-		this->drainWater(drainStrength);
-	}
-	else {
-		rainObjects.postNewValue(newRainObjects);
-	}
+	rainObjects.postNewValue(newRainObjects);
 
 	/* Don't wake up the foreground thread; do it when a new filtered frame arrives: */
 	// Vrui::requestUpdate();
@@ -1544,6 +1524,5 @@ void Sandbox::initContext(GLContextData& contextData) const
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT,currentFrameBuffer);
 	}
 	}
-
 
 VRUI_APPLICATION_RUN(Sandbox)
