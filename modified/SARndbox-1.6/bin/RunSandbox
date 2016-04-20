@@ -1,7 +1,0 @@
-#!/bin/bash
-
-#./SARndbox -fpv -cp ../share/SARndbox-1.6/Control.fifo -loadInputGraph SavedInputGraph0001.inputgraph &
-./SARndbox -fpv -cp ../share/SARndbox-1.6/Control.fifo &
-
-
-	 
