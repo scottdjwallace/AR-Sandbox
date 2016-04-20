@@ -1,0 +1,57 @@
+section InputGraph
+	section Tool0
+		toolClass WaterTool
+		bindings ((Mouse, 0, 1, 2, 3, 4, 5, 6, 7))
+	endsection
+
+	section Tool1
+		toolClass RayScreenMenuTool
+		bindings ((Mouse, Mouse3))
+	endsection
+
+	section Tool2
+		toolClass FPSNavigationTool
+		bindings ((Mouse, q, a, d, s, w, Space))
+		activationToggle true
+		rotateFactors (5, 5)
+		moveSpeeds (200, 200)
+		fallAcceleration 386.220472440944889
+		jumpVelocity 157.480314960629926
+		probeSize 12
+		maxClimb 12
+		fixAzimuth false
+		levelOnExit false
+		drawHud true
+		hudColor (0, 1, 0)
+		hudDist 24
+		hudRadius 5
+		hudFontSize 0.112500004
+	endsection
+
+	section Tool3
+		toolClass ScrollTool
+		bindings ((Mouse, MouseWheel))
+	endsection
+
+	section Tool4
+		toolClass WidgetTool
+		bindings ((Mouse, Mouse1))
+	endsection
+
+	section Tool5
+		toolClass MouseNavigationTool
+		bindings ((Tool4, Button0), (Mouse, z, LeftShift), (Tool3, Valuator0))
+		rotatePlaneOffset 2.5
+		rotateFactor 2.5
+		invertDolly false
+		dollyingDirection (-0, -0, -1)
+		scalingDirection (-0, -0, -1)
+		dollyFactor 1
+		scaleFactor 2.5
+		wheelDollyFactor -10
+		wheelScaleFactor 0.5
+		spinThreshold 0.0750000029802322388
+		showScreenCenter true
+		interactWithWidgets false
+	endsection
+endsection
